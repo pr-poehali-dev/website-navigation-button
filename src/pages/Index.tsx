@@ -5,7 +5,7 @@ const Index = () => {
     >
       {/* Header */}
       <div style={{ backgroundColor: "#1a90d6", padding: "20px 20px 16px", display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
-        <a href="https://dmsu.gov.ua" target="_blank" rel="noopener noreferrer">
+        <a href="https://dmsu.gov.ua" target="_blank" rel="noopener noreferrer" style={{ display: "block", cursor: "pointer" }}>
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Coat_of_arms_of_Ukraine.svg/800px-Coat_of_arms_of_Ukraine.svg.png"
             alt="Герб України"
@@ -17,7 +17,6 @@ const Index = () => {
               border: "3px solid #f5c518",
               backgroundColor: "white",
               padding: "6px",
-              cursor: "pointer",
               display: "block"
             }}
           />
@@ -25,28 +24,6 @@ const Index = () => {
         <div style={{ color: "white", fontWeight: "700", fontSize: "20px", lineHeight: "1.3", letterSpacing: "0.5px", textAlign: "center" }}>
           ДЕРЖАВНА МІГРАЦІЙНА<br />СЛУЖБА УКРАЇНИ
         </div>
-        <a
-          href="https://dmsu.gov.ua"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: "block",
-            backgroundColor: "white",
-            color: "#1a90d6",
-            textAlign: "center",
-            padding: "12px 24px",
-            borderRadius: "8px",
-            fontSize: "15px",
-            fontWeight: "700",
-            textDecoration: "none",
-            letterSpacing: "0.3px",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-            width: "100%",
-            boxSizing: "border-box" as const
-          }}
-        >
-          Перейти на офіційний портал ДМС
-        </a>
       </div>
 
       {/* Content */}
