@@ -5,19 +5,23 @@ const Index = () => {
     >
       {/* Header */}
       <div style={{ backgroundColor: "#1a90d6", padding: "20px 20px 16px", display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Coat_of_arms_of_Ukraine.svg/800px-Coat_of_arms_of_Ukraine.svg.png"
-          alt="Герб України"
-          style={{
-            width: "80px",
-            height: "80px",
-            objectFit: "contain",
-            borderRadius: "50%",
-            border: "3px solid #f5c518",
-            backgroundColor: "white",
-            padding: "6px"
-          }}
-        />
+        <a href="https://dmsu.gov.ua" target="_blank" rel="noopener noreferrer">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Coat_of_arms_of_Ukraine.svg/800px-Coat_of_arms_of_Ukraine.svg.png"
+            alt="Герб України"
+            style={{
+              width: "80px",
+              height: "80px",
+              objectFit: "contain",
+              borderRadius: "50%",
+              border: "3px solid #f5c518",
+              backgroundColor: "white",
+              padding: "6px",
+              cursor: "pointer",
+              display: "block"
+            }}
+          />
+        </a>
         <div style={{ color: "white", fontWeight: "700", fontSize: "20px", lineHeight: "1.3", letterSpacing: "0.5px", textAlign: "center" }}>
           ДЕРЖАВНА МІГРАЦІЙНА<br />СЛУЖБА УКРАЇНИ
         </div>
