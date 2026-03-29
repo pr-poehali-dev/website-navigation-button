@@ -1,4 +1,8 @@
 const Index = () => {
+  const now = new Date();
+  const pad = (n: number) => String(n).padStart(2, '0');
+  const currentDate = `${pad(now.getDate())}.${pad(now.getMonth() + 1)}.${now.getFullYear()} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+
   return (
     <div
       style={{ fontFamily: "'Roboto', sans-serif", backgroundColor: "#f0f0f0", minHeight: "100vh", paddingTop: "5mm" }}
@@ -27,7 +31,7 @@ const Index = () => {
         <div style={{ marginBottom: "16px" }}>
           <div style={{ color: "#888", fontSize: "14px", marginBottom: "4px" }}>Витяг:</div>
           <div style={{ fontWeight: "700", fontSize: "16px", color: "#2e7d32" }}>
-            ДІЙСНИЙ <span style={{ fontWeight: "400", color: "#2e7d32" }}>(26.03.2026 10:47)</span>
+            ДІЙСНИЙ <span style={{ fontWeight: "400", color: "#2e7d32" }}>({currentDate})</span>
           </div>
         </div>
 
