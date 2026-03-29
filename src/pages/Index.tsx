@@ -7,12 +7,9 @@ const Index = () => {
       <div style={{ backgroundColor: "#1a90d6", padding: "20px", display: "flex", flexDirection: "row", alignItems: "center", gap: "16px" }}>
         <a href="https://dmsu.gov.ua" target="_blank" rel="noopener noreferrer" style={{ display: "block", cursor: "pointer", flexShrink: 0 }}>
           <img
-            src="https://dmsu.gov.ua/assets/img/logo.png"
+            src="https://cdn.poehali.dev/projects/53635ed7-6b6d-4c81-a7b6-6e64215ca348/bucket/6abd0d20-5f90-43b0-bc4f-7bcb64dcab61.jpeg"
             alt="Логотип ДМС"
-            style={{ width: "70px", height: "70px", objectFit: "contain", display: "block" }}
-            onError={(e) => {
-              (e.currentTarget as HTMLImageElement).src = "https://cdn.poehali.dev/projects/53635ed7-6b6d-4c81-a7b6-6e64215ca348/bucket/69a5eb70-1465-45b9-b0ff-b7207a6a4c5b.png";
-            }}
+            style={{ width: "70px", height: "70px", objectFit: "contain", display: "block", borderRadius: "50%" }}
           />
         </a>
         <div style={{ color: "white", fontWeight: "700", fontSize: "18px", lineHeight: "1.3", letterSpacing: "0.5px" }}>
