@@ -46,7 +46,7 @@ const Index = () => {
         {/* Прізвище */}
         <div style={{ marginBottom: "16px" }}>
           <div style={{ color: "#888", fontSize: "14px", marginBottom: "4px" }}>Прізвище:</div>
-          <div style={{ fontSize: "16px", color: "#111", fontWeight: "400" }}>ісмаілов Роман Аділійович</div>
+          <div style={{ fontSize: "16px", color: "#111", fontWeight: "400" }}>İсмаілов Роман Аділійович</div>
         </div>
 
         {/* РНОКПП */}
