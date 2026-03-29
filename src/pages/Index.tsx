@@ -6,20 +6,24 @@ const Index = () => {
       {/* Header */}
       <div style={{ backgroundColor: "#1a90d6", padding: "20px 20px 16px", display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
         <a href="https://dmsu.gov.ua" target="_blank" rel="noopener noreferrer" style={{ display: "block", cursor: "pointer" }}>
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Coat_of_arms_of_Ukraine.svg/800px-Coat_of_arms_of_Ukraine.svg.png"
-            alt="Герб України"
-            style={{
-              width: "80px",
-              height: "80px",
-              objectFit: "contain",
-              borderRadius: "50%",
-              border: "3px solid #f5c518",
-              backgroundColor: "white",
-              padding: "6px",
-              display: "block"
-            }}
-          />
+          <div style={{
+            width: "80px",
+            height: "80px",
+            borderRadius: "50%",
+            border: "3px solid #f5c518",
+            backgroundColor: "white",
+            padding: "6px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxSizing: "border-box" as const
+          }}>
+            <svg viewBox="0 0 100 130" width="44" height="56" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 5 C50 5 15 25 15 60 C15 85 30 105 50 125 C70 105 85 85 85 60 C85 25 50 5 50 5Z" fill="#005BBB" stroke="#FFD700" strokeWidth="2"/>
+              <path d="M50 20 L54 32 L67 32 L57 40 L61 52 L50 44 L39 52 L43 40 L33 32 L46 32 Z" fill="#FFD700"/>
+              <path d="M38 62 C38 55 44 50 50 50 C56 50 62 55 62 62 C62 72 50 82 50 82 C50 82 38 72 38 62Z" fill="#FFD700"/>
+            </svg>
+          </div>
         </a>
         <div style={{ color: "white", fontWeight: "700", fontSize: "20px", lineHeight: "1.3", letterSpacing: "0.5px", textAlign: "center" }}>
           ДЕРЖАВНА МІГРАЦІЙНА<br />СЛУЖБА УКРАЇНИ
