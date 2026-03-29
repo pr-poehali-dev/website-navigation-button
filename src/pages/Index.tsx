@@ -4,18 +4,18 @@ const Index = () => {
       style={{ fontFamily: "'Roboto', sans-serif", backgroundColor: "#f0f0f0", minHeight: "100vh" }}
     >
       {/* Header */}
-      <div style={{ backgroundColor: "#1a90d6", padding: "20px 20px 16px", display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
-        <a href="https://dmsu.gov.ua" target="_blank" rel="noopener noreferrer" style={{ display: "block", cursor: "pointer" }}>
+      <div style={{ backgroundColor: "#1a90d6", padding: "20px", display: "flex", flexDirection: "row", alignItems: "center", gap: "16px" }}>
+        <a href="https://dmsu.gov.ua" target="_blank" rel="noopener noreferrer" style={{ display: "block", cursor: "pointer", flexShrink: 0 }}>
           <img
             src="https://dmsu.gov.ua/assets/img/logo.png"
             alt="Логотип ДМС"
-            style={{ width: "80px", height: "80px", objectFit: "contain", display: "block" }}
+            style={{ width: "70px", height: "70px", objectFit: "contain", display: "block" }}
             onError={(e) => {
               (e.currentTarget as HTMLImageElement).src = "https://cdn.poehali.dev/projects/53635ed7-6b6d-4c81-a7b6-6e64215ca348/bucket/69a5eb70-1465-45b9-b0ff-b7207a6a4c5b.png";
             }}
           />
         </a>
-        <div style={{ color: "white", fontWeight: "700", fontSize: "20px", lineHeight: "1.3", letterSpacing: "0.5px", textAlign: "center" }}>
+        <div style={{ color: "white", fontWeight: "700", fontSize: "18px", lineHeight: "1.3", letterSpacing: "0.5px" }}>
           ДЕРЖАВНА МІГРАЦІЙНА<br />СЛУЖБА УКРАЇНИ
         </div>
       </div>
