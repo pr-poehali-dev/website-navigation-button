@@ -4,23 +4,45 @@ const Index = () => {
       style={{ fontFamily: "'Roboto', sans-serif", backgroundColor: "#f0f0f0", minHeight: "100vh" }}
     >
       {/* Header */}
-      <div style={{ backgroundColor: "#1a90d6", padding: "16px 20px", display: "flex", alignItems: "center", gap: "16px" }}>
+      <div style={{ backgroundColor: "#1a90d6", padding: "20px 20px 16px", display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" }}>
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Coat_of_arms_of_Ukraine.svg/800px-Coat_of_arms_of_Ukraine.svg.png"
           alt="Герб України"
           style={{
-            width: "70px",
-            height: "70px",
+            width: "80px",
+            height: "80px",
             objectFit: "contain",
             borderRadius: "50%",
             border: "3px solid #f5c518",
-            backgroundColor: "#1565c0",
-            padding: "4px"
+            backgroundColor: "white",
+            padding: "6px"
           }}
         />
-        <div style={{ color: "white", fontWeight: "700", fontSize: "20px", lineHeight: "1.3", letterSpacing: "0.5px" }}>
+        <div style={{ color: "white", fontWeight: "700", fontSize: "20px", lineHeight: "1.3", letterSpacing: "0.5px", textAlign: "center" }}>
           ДЕРЖАВНА МІГРАЦІЙНА<br />СЛУЖБА УКРАЇНИ
         </div>
+        <a
+          href="https://dmsu.gov.ua"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: "block",
+            backgroundColor: "white",
+            color: "#1a90d6",
+            textAlign: "center",
+            padding: "12px 24px",
+            borderRadius: "8px",
+            fontSize: "15px",
+            fontWeight: "700",
+            textDecoration: "none",
+            letterSpacing: "0.3px",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+            width: "100%",
+            boxSizing: "border-box" as const
+          }}
+        >
+          Перейти на офіційний портал ДМС
+        </a>
       </div>
 
       {/* Content */}
@@ -93,34 +115,9 @@ const Index = () => {
         </div>
 
         {/* Країна вибуття */}
-        <div style={{ marginBottom: "32px" }}>
+        <div style={{ marginBottom: "16px" }}>
           <div style={{ color: "#888", fontSize: "14px" }}>Країна вибуття:</div>
         </div>
-
-        {/* Кнопка */}
-        <a
-          href="https://dmsu.gov.ua"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: "block",
-            backgroundColor: "#1a90d6",
-            color: "white",
-            textAlign: "center",
-            padding: "16px",
-            borderRadius: "8px",
-            fontSize: "16px",
-            fontWeight: "700",
-            textDecoration: "none",
-            letterSpacing: "0.3px",
-            boxShadow: "0 2px 8px rgba(26,144,214,0.4)",
-            transition: "background-color 0.2s"
-          }}
-          onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#1565c0")}
-          onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#1a90d6")}
-        >
-          Перейти на офіційний портал ДМС
-        </a>
       </div>
     </div>
   );
