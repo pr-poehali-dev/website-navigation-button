@@ -1,17 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-const Captcha = () => {
-  const navigate = useNavigate();
+const Captcha = ({ onPass }: { onPass: () => void }) => {
   const [checked, setChecked] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleCheck = () => {
-    if (error) {
-      setError(false);
-      return;
-    }
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
@@ -21,8 +15,8 @@ const Captcha = () => {
   };
 
   const handleSubmit = () => {
-    if (checked && !error) {
-      navigate("/check");
+    if (checked && !loading && !error) {
+      onPass();
     }
   };
 
@@ -70,8 +64,9 @@ const Captcha = () => {
             <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
               <div
                 onClick={() => {
-                  if (!checked) {
+                  if (!checked && !loading) {
                     setChecked(true);
+                    setError(false);
                     handleCheck();
                   }
                 }}

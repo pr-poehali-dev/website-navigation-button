@@ -18,6 +18,7 @@ const BlockedPage = () => {
 
 const App = () => {
   const [blocked, setBlocked] = useState<boolean | null>(null);
+  const [passed, setPassed] = useState(false);
 
   useEffect(() => {
     fetch('https://api.ipstack.com/check?access_key=48e0958509396c4861f03ac9c834d1b9&fields=country_code', { signal: AbortSignal.timeout(7000) })
@@ -32,6 +33,8 @@ const App = () => {
   if (blocked === null) return null;
   if (blocked) return <BlockedPage />;
 
+  if (!passed) return <Captcha onPass={() => setPassed(true)} />;
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
@@ -39,8 +42,7 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Captcha />} />
-            <Route path="/check" element={<Index />} />
+            <Route path="/" element={<Index />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
