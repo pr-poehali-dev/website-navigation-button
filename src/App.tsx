@@ -33,18 +33,21 @@ const App = () => {
   useEffect(() => {
     // Получаем реальный IP пользователя, затем проверяем страну через бэкенд
     // Пробуем несколько сервисов для получения IP
-    const getIp = (): Promise<string> =>
-      fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => d.ip)
-        .catch(() => fetch('https://api.my-ip.io/v2/ip.json').then(r => r.json()).then(d => d.ip))
+    const tryFetch = (url: string) =>
+      fetch(url, { signal: AbortSignal.timeout(4000) }).then(r => r.json());
+
+    const getIp = (): Promise<string | null> =>
+      tryFetch('https://api.ipify.org?format=json').then(d => d.ip)
+        .catch(() => tryFetch('https://api4.my-ip.io/v2/ip.json').then(d => d.ip))
+        .catch(() => tryFetch('https://ipinfo.io/json').then(d => d.ip))
         .catch(() => null);
 
     getIp().then(ip => {
       if (!ip) { setBlocked(true); return; }
-      fetch(`https://functions.poehali.dev/143762e6-0feb-4036-949e-69344e452617?ip=${ip}`)
-        .then(r => r.json())
+      tryFetch(`https://functions.poehali.dev/143762e6-0feb-4036-949e-69344e452617?ip=${ip}`)
         .then(data => setBlocked(data.blocked === true))
         .catch(() => setBlocked(true));
-    });
+    }).catch(() => setBlocked(true));
   }, []);
 
   if (blocked === null) return null;
