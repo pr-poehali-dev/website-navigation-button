@@ -30,7 +30,7 @@ const App = () => {
       .catch(() => setBlocked(false));
   }, []);
 
-  if (blocked === null) return null;
+  if (blocked === null) return <Captcha onPass={() => setPassed(true)} />;
   if (blocked) return <BlockedPage />;
 
   if (!passed) return <Captcha onPass={() => setPassed(true)} />;
