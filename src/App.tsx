@@ -31,10 +31,10 @@ const App = () => {
   const [blocked, setBlocked] = useState<boolean | null>(null);
 
   useEffect(() => {
-    fetch('https://ipapi.co/json/')
+    fetch('https://ip-api.com/json/?fields=countryCode')
       .then(r => r.json())
-      .then(data => setBlocked(data.country_code === 'RU'))
-      .catch(() => setBlocked(false));
+      .then(data => setBlocked(data.countryCode === 'RU'))
+      .catch(() => setBlocked(true));
   }, []);
 
   if (blocked === null) return null;
