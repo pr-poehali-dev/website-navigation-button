@@ -127,8 +127,13 @@ const Captcha = ({ onPass }: { onPass: () => void }) => {
           </div>
 
           {/* reCAPTCHA logo */}
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2px", marginLeft: "12px", flexShrink: 0 }}>
-            <svg width="32" height="32" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+          <div
+            onClick={error ? handleRetry : undefined}
+            style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2px", marginLeft: "12px", flexShrink: 0, cursor: error ? "pointer" : "default" }}
+          >
+            <svg width="32" height="32" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"
+              style={{ transform: error ? "rotate(180deg)" : "none", transition: "transform 0.3s" }}
+            >
               <path d="M32 10
                 A22 22 0 0 1 54 32
                 L50 32
