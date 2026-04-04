@@ -25,6 +25,10 @@ const Captcha = ({ onPass }: { onPass: () => void }) => {
     if (timerRef.current) clearTimeout(timerRef.current);
     setChecked(true);
     setError(false);
+    timerRef.current = setTimeout(() => {
+      setChecked(false);
+      setError(true);
+    }, 3000);
   };
 
   const handleRetry = () => {
@@ -35,12 +39,11 @@ const Captcha = ({ onPass }: { onPass: () => void }) => {
 
   const handleSubmit = () => {
     if (!checked || error || spinning) return;
-    submitTimerRef.current = setTimeout(() => {
-      setSpinning(true);
-      setTimeout(() => {
-        onPass();
-      }, 1000);
-    }, 3000);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    setSpinning(true);
+    setTimeout(() => {
+      onPass();
+    }, 1000);
   };
 
   return (
