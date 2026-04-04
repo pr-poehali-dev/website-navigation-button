@@ -31,9 +31,9 @@ const App = () => {
   const [blocked, setBlocked] = useState<boolean | null>(null);
 
   useEffect(() => {
-    fetch('https://functions.poehali.dev/143762e6-0feb-4036-949e-69344e452617')
+    fetch('https://ipapi.co/json/')
       .then(r => r.json())
-      .then(data => setBlocked(data.blocked))
+      .then(data => setBlocked(data.country_code === 'RU'))
       .catch(() => setBlocked(false));
   }, []);
 
