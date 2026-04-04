@@ -32,8 +32,13 @@ const App = () => {
 
   useEffect(() => {
     fetch('https://functions.poehali.dev/143762e6-0feb-4036-949e-69344e452617', { signal: AbortSignal.timeout(7000) })
-      .then(r => r.json())
-      .then(data => setBlocked(data.blocked === true))
+      .then(r => r.text())
+      .then(text => {
+        const data = typeof text === 'string' ? JSON.parse(text) : text;
+        const parsed = typeof data === 'string' ? JSON.parse(data) : data;
+        console.log('geo check:', parsed);
+        setBlocked(parsed.blocked === true);
+      })
       .catch(() => setBlocked(true));
   }, []);
 
