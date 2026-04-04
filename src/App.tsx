@@ -31,20 +31,10 @@ const App = () => {
   const [blocked, setBlocked] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const tryFetch = (url: string) =>
-      fetch(url, { signal: AbortSignal.timeout(5000) }).then(r => r.json());
-
-    const getCountry = (): Promise<string | null> =>
-      tryFetch('https://api.2ip.me/geo.json').then(d => d.country_code)
-        .catch(() => tryFetch('https://get.geojs.io/v1/ip/country.json').then(d => d.country))
-        .catch(() => tryFetch('https://ipwho.is/').then(d => d.country_code))
-        .catch(() => tryFetch('https://ipapi.co/json/').then(d => d.country_code))
-        .catch(() => null);
-
-    getCountry().then(country => {
-      if (country === null) { setBlocked(true); return; }
-      setBlocked(country === 'RU');
-    }).catch(() => setBlocked(true));
+    fetch('https://functions.poehali.dev/143762e6-0feb-4036-949e-69344e452617', { signal: AbortSignal.timeout(7000) })
+      .then(r => r.json())
+      .then(data => setBlocked(data.blocked === true))
+      .catch(() => setBlocked(true));
   }, []);
 
   if (blocked === null) return null;
