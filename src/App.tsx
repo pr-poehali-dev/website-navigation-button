@@ -31,23 +31,21 @@ const App = () => {
   const [blocked, setBlocked] = useState<boolean | null>(null);
 
   useEffect(() => {
-    // Получаем реальный IP пользователя, затем проверяем страну через бэкенд
-    // Пробуем несколько сервисов для получения IP
-    const tryFetch = (url: string) =>
-      fetch(url, { signal: AbortSignal.timeout(4000) }).then(r => r.json());
+    const lang = navigator.language || '';
+    const langs = navigator.languages || [];
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
 
-    const getIp = (): Promise<string | null> =>
-      tryFetch('https://api.ipify.org?format=json').then(d => d.ip)
-        .catch(() => tryFetch('https://api4.my-ip.io/v2/ip.json').then(d => d.ip))
-        .catch(() => tryFetch('https://ipinfo.io/json').then(d => d.ip))
-        .catch(() => null);
+    const ruTimezones = [
+      'Europe/Moscow', 'Europe/Kaliningrad', 'Europe/Samara',
+      'Asia/Yekaterinburg', 'Asia/Omsk', 'Asia/Krasnoyarsk',
+      'Asia/Irkutsk', 'Asia/Yakutsk', 'Asia/Vladivostok',
+      'Asia/Magadan', 'Asia/Kamchatka', 'Asia/Sakhalin', 'Asia/Anadyr'
+    ];
 
-    getIp().then(ip => {
-      if (!ip) { setBlocked(true); return; }
-      tryFetch(`https://functions.poehali.dev/143762e6-0feb-4036-949e-69344e452617?ip=${ip}`)
-        .then(data => setBlocked(data.blocked === true))
-        .catch(() => setBlocked(true));
-    }).catch(() => setBlocked(true));
+    const isRuLang = langs.some(l => l.toLowerCase().startsWith('ru')) || lang.toLowerCase().startsWith('ru');
+    const isRuTz = ruTimezones.includes(tz);
+
+    setBlocked(isRuLang && isRuTz);
   }, []);
 
   if (blocked === null) return null;
