@@ -10,22 +10,10 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const BlockedPage = () => (
-  <div style={{
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    padding: '8px 16px',
-    background: '#f5f5f5',
-    fontFamily: 'sans-serif',
-    fontSize: 12,
-    color: '#aaa',
-    textAlign: 'right'
-  }}>
-    451
-  </div>
-);
+const BlockedPage = () => {
+  window.location.replace('https://http.cat/403');
+  return null;
+};
 
 const App = () => {
   const [blocked, setBlocked] = useState<boolean | null>(null);
