@@ -4,14 +4,23 @@ const Captcha = ({ onPass }: { onPass: () => void }) => {
   const [checked, setChecked] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [attempt, setAttempt] = useState(0);
 
-  const handleCheck = () => {
+  const handleClick = () => {
+    if (loading || checked) return;
+    setChecked(true);
+    setError(false);
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      setError(true);
-      setChecked(false);
-    }, 800);
+      if (attempt === 0) {
+        setError(true);
+        setChecked(false);
+        setAttempt(1);
+      } else {
+        setError(false);
+      }
+    }, 1200);
   };
 
   const handleSubmit = () => {
@@ -63,13 +72,7 @@ const Captcha = ({ onPass }: { onPass: () => void }) => {
             )}
             <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
               <div
-                onClick={() => {
-                  if (!checked && !loading) {
-                    setChecked(true);
-                    setError(false);
-                    handleCheck();
-                  }
-                }}
+                onClick={handleClick}
                 style={{
                   width: "24px",
                   height: "24px",
