@@ -1,0 +1,12 @@
+{
+  "tests": [
+    {
+      "name": "Check country endpoint",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": {"blocked": false},
+      "bodyMatcher": "partial"
+    }
+  ]
+}
