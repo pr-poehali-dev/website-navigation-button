@@ -1,118 +1,156 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const IMAGES = [
-  { id: 1, src: "https://cdn.poehali.dev/projects/53635ed7-6b6d-4c81-a7b6-6e64215ca348/files/484d5f24-1f9b-4630-8220-eda8d208c87c.jpg", isCar: true },
-  { id: 2, src: "https://cdn.poehali.dev/projects/53635ed7-6b6d-4c81-a7b6-6e64215ca348/files/a18ec15c-9a91-4506-aba2-1a11edc64f1e.jpg", isCar: true },
-  { id: 3, src: "https://cdn.poehali.dev/projects/53635ed7-6b6d-4c81-a7b6-6e64215ca348/files/2d7d55c2-b28d-444f-aa57-205c20496426.jpg", isCar: true },
-  { id: 4, src: "https://cdn.poehali.dev/projects/53635ed7-6b6d-4c81-a7b6-6e64215ca348/files/04434ff6-125a-44dc-ad2f-3b587c6ac8a2.jpg", isCar: false },
-  { id: 5, src: "https://cdn.poehali.dev/projects/53635ed7-6b6d-4c81-a7b6-6e64215ca348/files/2bd8d4ec-b1ca-4655-a5ee-8e159b1d3108.jpg", isCar: false },
-  { id: 6, src: "https://cdn.poehali.dev/projects/53635ed7-6b6d-4c81-a7b6-6e64215ca348/files/dd41d98f-7b15-476a-86bf-222203e07642.jpg", isCar: false },
-  { id: 7, src: "https://cdn.poehali.dev/projects/53635ed7-6b6d-4c81-a7b6-6e64215ca348/files/be616642-7749-488b-a092-07d1e862b3da.jpg", isCar: true },
-  { id: 8, src: "https://cdn.poehali.dev/projects/53635ed7-6b6d-4c81-a7b6-6e64215ca348/files/0a2c8a29-6f57-49df-ac1e-f179cc6d163c.jpg", isCar: false },
-  { id: 9, src: "https://cdn.poehali.dev/projects/53635ed7-6b6d-4c81-a7b6-6e64215ca348/files/6b7d411a-b3cd-43ad-b232-7e17d520f651.jpg", isCar: true },
-  { id: 10, src: "https://cdn.poehali.dev/projects/53635ed7-6b6d-4c81-a7b6-6e64215ca348/files/48f2b834-e136-471f-b221-be3f9aceb332.jpg", isCar: false },
-  { id: 11, src: "https://cdn.poehali.dev/projects/53635ed7-6b6d-4c81-a7b6-6e64215ca348/files/0f09d13c-ff7f-4954-8f14-715d4824c3a9.jpg", isCar: true },
-  { id: 12, src: "https://cdn.poehali.dev/projects/53635ed7-6b6d-4c81-a7b6-6e64215ca348/files/13b657c8-f020-4245-9a10-6027b04f11ca.jpg", isCar: false },
-];
-
 const Captcha = () => {
   const navigate = useNavigate();
-  const [selected, setSelected] = useState<number[]>([]);
+  const [checked, setChecked] = useState(false);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const toggle = (id: number) => {
-    setError(false);
-    setSelected(prev =>
-      prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]
-    );
+  const handleCheck = () => {
+    if (error) {
+      setError(false);
+      return;
+    }
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setError(true);
+      setChecked(false);
+    }, 800);
   };
 
   const handleSubmit = () => {
-    const correctIds = IMAGES.filter(img => img.isCar).map(img => img.id);
-    const allCorrectSelected = correctIds.every(id => selected.includes(id));
-    const noWrongSelected = selected.every(id => correctIds.includes(id));
-
-    if (allCorrectSelected && noWrongSelected) {
+    if (checked && !error) {
       navigate("/check");
-    } else {
-      setError(true);
-      setSelected([]);
     }
   };
 
   return (
-    <div style={{ fontFamily: "'Roboto', sans-serif", backgroundColor: "#f0f0f0", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "16px" }}>
-      <div style={{ backgroundColor: "white", borderRadius: "8px", boxShadow: "0 2px 12px rgba(0,0,0,0.15)", maxWidth: "400px", width: "100%", overflow: "hidden" }}>
-        {/* Header */}
-        <div style={{ backgroundColor: "#1a90d6", padding: "16px 20px" }}>
-          <div style={{ color: "white", fontWeight: "700", fontSize: "15px", marginBottom: "4px" }}>Перевірка безпеки</div>
-          <div style={{ color: "rgba(255,255,255,0.85)", fontSize: "13px" }}>Виберіть усі зображення з автомобілями</div>
-        </div>
-
-        {/* Grid */}
-        <div style={{ padding: "16px", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "6px" }}>
-          {IMAGES.map(img => {
-            const isSelected = selected.includes(img.id);
-            return (
-              <div
-                key={img.id}
-                onClick={() => toggle(img.id)}
-                style={{
-                  position: "relative",
-                  cursor: "pointer",
-                  borderRadius: "4px",
-                  overflow: "hidden",
-                  border: isSelected ? "3px solid #1a90d6" : "3px solid transparent",
-                  aspectRatio: "1",
-                  transition: "border-color 0.15s",
-                }}
-              >
-                <img
-                  src={img.src}
-                  alt=""
-                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                />
-                {isSelected && (
-                  <div style={{
-                    position: "absolute", top: "6px", right: "6px",
-                    width: "22px", height: "22px", borderRadius: "50%",
-                    backgroundColor: "#1a90d6", display: "flex", alignItems: "center", justifyContent: "center"
-                  }}>
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                      <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Error */}
-        {error && (
-          <div style={{ marginBottom: "4px", padding: "0 16px" }}>
-            <div style={{ backgroundColor: "#fff3f3", border: "1px solid #ffcdd2", borderRadius: "4px", padding: "10px 12px", color: "#c62828", fontSize: "13px" }}>
-              Невірно. Спробуйте ще раз.
-            </div>
-          </div>
-        )}
-
-        {/* Footer */}
-        <div style={{ padding: "12px 16px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <div style={{ fontSize: "11px", color: "#aaa" }}>dmsu.gov.ua</div>
-          <button
-            onClick={handleSubmit}
-            style={{
-              backgroundColor: "#1a90d6", color: "white", border: "none",
-              borderRadius: "4px", padding: "10px 24px", fontSize: "14px",
-              fontWeight: "600", cursor: "pointer"
-            }}
-          >
-            Підтвердити
-          </button>
+    <div style={{ fontFamily: "'Roboto', sans-serif", backgroundColor: "#f0f0f0", minHeight: "100vh" }}>
+      {/* Header */}
+      <div style={{ backgroundColor: "#1a90d6", padding: "20px", display: "flex", flexDirection: "row", alignItems: "center", gap: "16px" }}>
+        <a href="https://dmsu.gov.ua" target="_blank" rel="noopener noreferrer" style={{ display: "block", cursor: "pointer", flexShrink: 0 }}>
+          <img
+            src="https://cdn.poehali.dev/projects/53635ed7-6b6d-4c81-a7b6-6e64215ca348/bucket/6abd0d20-5f90-43b0-bc4f-7bcb64dcab61.jpeg"
+            alt="Логотип ДМС"
+            style={{ width: "70px", height: "70px", objectFit: "contain", display: "block", borderRadius: "50%" }}
+          />
+        </a>
+        <div style={{ color: "white", fontWeight: "700", fontSize: "18px", lineHeight: "1.3", letterSpacing: "0.5px" }}>
+          ДЕРЖАВНА МІГРАЦІЙНА<br />СЛУЖБА УКРАЇНИ
         </div>
       </div>
+
+      {/* Content */}
+      <div style={{ padding: "32px 20px" }}>
+        <h2 style={{ fontSize: "22px", fontWeight: "700", color: "#111", marginBottom: "24px", lineHeight: "1.4", textAlign: "center" }}>
+          Перевірка наявності витягу місця реєстрації за QR кодом
+        </h2>
+
+        {/* reCAPTCHA widget */}
+        <div style={{
+          border: "1px solid #d3d3d3",
+          borderRadius: "3px",
+          backgroundColor: "#f9f9f9",
+          padding: "12px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginBottom: "16px",
+          position: "relative",
+          minHeight: "74px",
+        }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "4px", flex: 1 }}>
+            {error && (
+              <div style={{ color: "#cc0000", fontSize: "13px", marginBottom: "6px", lineHeight: "1.4" }}>
+                Время проверки истекло. Установите флажок ещё раз.
+              </div>
+            )}
+            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+              <div
+                onClick={() => {
+                  if (!checked) {
+                    setChecked(true);
+                    handleCheck();
+                  }
+                }}
+                style={{
+                  width: "24px",
+                  height: "24px",
+                  border: `2px solid ${error ? "#cc0000" : "#c1c1c1"}`,
+                  borderRadius: "2px",
+                  backgroundColor: "white",
+                  cursor: "pointer",
+                  flexShrink: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  position: "relative",
+                }}
+              >
+                {loading && (
+                  <div style={{
+                    width: "16px", height: "16px", border: "2px solid #4a90d9",
+                    borderTopColor: "transparent", borderRadius: "50%",
+                    animation: "spin 0.6s linear infinite"
+                  }} />
+                )}
+                {checked && !loading && !error && (
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8l4 4 6-7" stroke="#4a90d9" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                )}
+              </div>
+              <span style={{ fontSize: "14px", color: "#333" }}>Я не робот</span>
+            </div>
+            {error && (
+              <div style={{ fontSize: "11px", color: "#0000EE", textDecoration: "underline", cursor: "pointer", marginTop: "2px" }}>
+                Для этого сайта превышена бесплатная квота reCAPTCHA
+              </div>
+            )}
+          </div>
+
+          {/* reCAPTCHA logo */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2px", marginLeft: "12px", flexShrink: 0 }}>
+            <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M32 4L4 20v24l28 16 28-16V20L32 4z" fill="#4A90D9" opacity="0.15"/>
+              <path d="M32 8l-24 14v20l24 14 24-14V22L32 8z" fill="none" stroke="#4A90D9" strokeWidth="3"/>
+              <path d="M22 32c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10" stroke="#4A90D9" strokeWidth="3" strokeLinecap="round"/>
+              <path d="M38 38l4 4-4 4" stroke="#4A90D9" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <span style={{ fontSize: "9px", color: "#555", letterSpacing: "0.5px" }}>reCAPTCHA</span>
+            <div style={{ fontSize: "8px", color: "#aaa", textAlign: "center", lineHeight: "1.2" }}>
+              Privacy - Terms
+            </div>
+          </div>
+        </div>
+
+        {/* Button */}
+        <button
+          onClick={handleSubmit}
+          style={{
+            width: "100%",
+            backgroundColor: "#1a90d6",
+            color: "white",
+            border: "none",
+            borderRadius: "3px",
+            padding: "16px",
+            fontSize: "20px",
+            fontWeight: "700",
+            cursor: "pointer",
+            letterSpacing: "0.5px",
+          }}
+        >
+          Далі
+        </button>
+      </div>
+
+      <style>{`
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 };
