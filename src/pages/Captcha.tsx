@@ -4,28 +4,35 @@ const Captcha = ({ onPass }: { onPass: () => void }) => {
   const [checked, setChecked] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [attempt, setAttempt] = useState(0);
+  const [deadline, setDeadline] = useState<number | null>(null);
 
   const handleClick = () => {
     if (loading || checked) return;
     setChecked(true);
     setError(false);
     setLoading(true);
+
+    const end = Date.now() + 30000;
+    setDeadline(end);
+
     setTimeout(() => {
       setLoading(false);
-      if (attempt === 0) {
+      if (Date.now() >= end - 100) {
         setError(true);
         setChecked(false);
-        setAttempt(1);
-      } else {
-        setError(false);
+        setDeadline(null);
       }
-    }, 1200);
+    }, 30000);
   };
 
   const handleSubmit = () => {
-    if (checked && !loading && !error) {
+    if (!checked || loading || error) return;
+    if (deadline && Date.now() < deadline) {
       onPass();
+    } else {
+      setError(true);
+      setChecked(false);
+      setDeadline(null);
     }
   };
 
