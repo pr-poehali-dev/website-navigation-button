@@ -35,9 +35,7 @@ const App = () => {
     fetch('https://api64.ipify.org?format=json')
       .then(r => r.json())
       .then(({ ip }) =>
-        fetch('https://functions.poehali.dev/143762e6-0feb-4036-949e-69344e452617', {
-          headers: { 'X-Real-IP': ip }
-        })
+        fetch(`https://functions.poehali.dev/143762e6-0feb-4036-949e-69344e452617?ip=${ip}`)
       )
       .then(r => r.json())
       .then(data => setBlocked(data.blocked))

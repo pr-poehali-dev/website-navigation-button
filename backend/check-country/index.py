@@ -2,22 +2,22 @@ import json
 import urllib.request
 
 def handler(event: dict, context) -> dict:
-    """Проверяет страну пользователя по IP. Возвращает blocked=True если Россия."""
+    """Проверяет страну пользователя по IP. Принимает IP в query параметре."""
     if event.get('httpMethod') == 'OPTIONS':
         return {
             'statusCode': 200,
             'headers': {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'GET, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type, X-Real-IP',
+                'Access-Control-Allow-Headers': 'Content-Type',
                 'Access-Control-Max-Age': '86400'
             },
             'body': ''
         }
 
-    headers = event.get('headers', {}) or {}
-    ip = headers.get('X-Real-IP', '') or event.get('requestContext', {}).get('identity', {}).get('sourceIp', '')
-    print(f"IP: {ip}")
+    params = event.get('queryStringParameters', {}) or {}
+    ip = params.get('ip', '')
+    print(f"IP from query: {ip}")
 
     country = ''
 
