@@ -10,18 +10,20 @@ const Captcha = ({ onPass }: { onPass: () => void }) => {
     if (loading || checked) return;
     setChecked(true);
     setError(false);
-    setLoading(true);
+    setLoading(false);
 
     const end = Date.now() + 30000;
     setDeadline(end);
 
     setTimeout(() => {
-      setLoading(false);
-      if (Date.now() >= end - 100) {
-        setError(true);
-        setChecked(false);
-        setDeadline(null);
-      }
+      setDeadline(prev => {
+        if (prev && Date.now() >= prev - 100) {
+          setError(true);
+          setChecked(false);
+          return null;
+        }
+        return prev;
+      });
     }, 30000);
   };
 
