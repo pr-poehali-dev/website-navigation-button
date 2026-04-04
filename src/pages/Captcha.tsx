@@ -3,14 +3,16 @@ import { useState, useEffect, useRef } from "react";
 const Captcha = ({ onPass }: { onPass: () => void }) => {
   const [checked, setChecked] = useState(false);
   const [error, setError] = useState(false);
+  const [spinning, setSpinning] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const submitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const startTimer = () => {
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       setChecked(false);
       setError(true);
-    }, 5000);
+    }, 2000);
   };
 
   useEffect(() => {
@@ -32,9 +34,13 @@ const Captcha = ({ onPass }: { onPass: () => void }) => {
   };
 
   const handleSubmit = () => {
-    if (checked && !error) {
-      onPass();
-    }
+    if (!checked || error || spinning) return;
+    submitTimerRef.current = setTimeout(() => {
+      setSpinning(true);
+      setTimeout(() => {
+        onPass();
+      }, 1000);
+    }, 3000);
   };
 
   return (
@@ -95,7 +101,14 @@ const Captcha = ({ onPass }: { onPass: () => void }) => {
                   position: "relative",
                 }}
               >
-                {checked && !error && (
+                {spinning && (
+                  <div style={{
+                    width: "16px", height: "16px", border: "2px solid #4a90d9",
+                    borderTopColor: "transparent", borderRadius: "50%",
+                    animation: "spin 0.6s linear infinite"
+                  }} />
+                )}
+                {checked && !error && !spinning && (
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                     <path d="M3 8l4 4 6-7" stroke="#4a90d9" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
