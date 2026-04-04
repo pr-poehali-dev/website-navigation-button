@@ -128,11 +128,19 @@ const Captcha = ({ onPass }: { onPass: () => void }) => {
 
           {/* reCAPTCHA logo */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2px", marginLeft: "12px", flexShrink: 0 }}>
-            <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M32 4L4 20v24l28 16 28-16V20L32 4z" fill="#4A90D9" opacity="0.15"/>
-              <path d="M32 8l-24 14v20l24 14 24-14V22L32 8z" fill="none" stroke="#4A90D9" strokeWidth="3"/>
-              <path d="M22 32c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10" stroke="#4A90D9" strokeWidth="3" strokeLinecap="round"/>
-              <path d="M38 38l4 4-4 4" stroke="#4A90D9" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <svg width="32" height="32" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <path d="M32 10
+                A22 22 0 0 1 54 32
+                L50 32
+                A18 18 0 0 0 32 14
+                L32 10Z" fill="#4A90E2"/>
+              <polygon points="54,24 58,36 46,32" fill="#4A90E2"/>
+              <path d="M32 54
+                A22 22 0 0 1 10 32
+                L14 32
+                A18 18 0 0 0 32 50
+                L32 54Z" fill="#4A90E2"/>
+              <polygon points="10,40 6,28 18,32" fill="#4A90E2"/>
             </svg>
             <span style={{ fontSize: "9px", color: "#555", letterSpacing: "0.5px" }}>reCAPTCHA</span>
             <div style={{ fontSize: "8px", color: "#aaa", textAlign: "center", lineHeight: "1.2" }}>
