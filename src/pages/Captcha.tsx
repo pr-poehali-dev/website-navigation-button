@@ -95,14 +95,7 @@ const Captcha = ({ onPass }: { onPass: () => void }) => {
                   position: "relative",
                 }}
               >
-                {loading && (
-                  <div style={{
-                    width: "16px", height: "16px", border: "2px solid #4a90d9",
-                    borderTopColor: "transparent", borderRadius: "50%",
-                    animation: "spin 0.6s linear infinite"
-                  }} />
-                )}
-                {checked && !loading && !error && (
+                {checked && !error && (
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                     <path d="M3 8l4 4 6-7" stroke="#4a90d9" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
