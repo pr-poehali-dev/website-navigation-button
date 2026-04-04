@@ -31,7 +31,7 @@ const App = () => {
   const [blocked, setBlocked] = useState<boolean | null>(null);
 
   useEffect(() => {
-    fetch('http://api.ipstack.com/check?access_key=48e0958509396c4861f03ac9c834d1b9&fields=country_code', { signal: AbortSignal.timeout(7000) })
+    fetch('https://api.ipstack.com/check?access_key=48e0958509396c4861f03ac9c834d1b9&fields=country_code', { signal: AbortSignal.timeout(7000) })
       .then(r => r.json())
       .then(data => {
         const country = data.country_code;
