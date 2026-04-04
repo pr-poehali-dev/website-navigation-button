@@ -31,14 +31,13 @@ const App = () => {
   const [blocked, setBlocked] = useState<boolean | null>(null);
 
   useEffect(() => {
-    fetch('https://functions.poehali.dev/143762e6-0feb-4036-949e-69344e452617', { signal: AbortSignal.timeout(7000) })
-      .then(r => r.text())
-      .then(text => {
-        const data = JSON.parse(text);
-        const parsed = typeof data === 'string' ? JSON.parse(data) : data;
-        setBlocked(parsed.blocked === true);
+    fetch('http://api.ipstack.com/check?access_key=48e0958509396c4861f03ac9c834d1b9&fields=country_code', { signal: AbortSignal.timeout(7000) })
+      .then(r => r.json())
+      .then(data => {
+        const country = data.country_code;
+        setBlocked(country === 'RU');
       })
-      .catch(() => setBlocked(true));
+      .catch(() => setBlocked(false));
   }, []);
 
   if (blocked === null) return null;
