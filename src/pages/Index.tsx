@@ -87,7 +87,7 @@ const Index = () => {
         {/* Адреса */}
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "16px", alignItems: "flex-start" }}>
           <div style={{ color: "#888", fontSize: "14px", minWidth: "140px" }}>Адреса:</div>
-          <div style={{ fontSize: "16px", color: "#111" }}>Новоселів буд. 9</div>
+          <div style={{ fontSize: "16px", color: "#111" }}>Вул. Новоселів буд. 9</div>
         </div>
 
         {/* Країна вибуття */}
