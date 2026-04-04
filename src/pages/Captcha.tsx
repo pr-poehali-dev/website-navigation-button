@@ -1,40 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const Captcha = ({ onPass }: { onPass: () => void }) => {
   const [checked, setChecked] = useState(false);
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [deadline, setDeadline] = useState<number | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const startTimer = () => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      setChecked(false);
+      setError(true);
+    }, 5000);
+  };
+
+  useEffect(() => {
+    startTimer();
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+  }, []);
 
   const handleClick = () => {
-    if (loading || checked) return;
+    if (checked) return;
+    if (timerRef.current) clearTimeout(timerRef.current);
     setChecked(true);
     setError(false);
-    setLoading(false);
+  };
 
-    const end = Date.now() + 30000;
-    setDeadline(end);
-
-    setTimeout(() => {
-      setDeadline(prev => {
-        if (prev && Date.now() >= prev - 100) {
-          setError(true);
-          setChecked(false);
-          return null;
-        }
-        return prev;
-      });
-    }, 30000);
+  const handleRetry = () => {
+    setError(false);
+    setChecked(false);
+    startTimer();
   };
 
   const handleSubmit = () => {
-    if (!checked || loading || error) return;
-    if (deadline && Date.now() < deadline) {
+    if (checked && !error) {
       onPass();
-    } else {
-      setError(true);
-      setChecked(false);
-      setDeadline(null);
     }
   };
 
@@ -81,7 +80,7 @@ const Captcha = ({ onPass }: { onPass: () => void }) => {
             )}
             <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
               <div
-                onClick={handleClick}
+                onClick={error ? handleRetry : handleClick}
                 style={{
                   width: "24px",
                   height: "24px",
