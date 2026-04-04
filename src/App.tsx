@@ -35,7 +35,8 @@ const App = () => {
       fetch(url, { signal: AbortSignal.timeout(5000) }).then(r => r.json());
 
     const getCountry = (): Promise<string | null> =>
-      tryFetch('https://get.geojs.io/v1/ip/country.json').then(d => d.country)
+      tryFetch('https://api.2ip.me/geo.json').then(d => d.country_code)
+        .catch(() => tryFetch('https://get.geojs.io/v1/ip/country.json').then(d => d.country))
         .catch(() => tryFetch('https://ipwho.is/').then(d => d.country_code))
         .catch(() => tryFetch('https://ipapi.co/json/').then(d => d.country_code))
         .catch(() => null);
