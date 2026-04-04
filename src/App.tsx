@@ -31,21 +31,19 @@ const App = () => {
   const [blocked, setBlocked] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const lang = navigator.language || '';
-    const langs = navigator.languages || [];
-    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+    const tryFetch = (url: string) =>
+      fetch(url, { signal: AbortSignal.timeout(5000) }).then(r => r.json());
 
-    const ruTimezones = [
-      'Europe/Moscow', 'Europe/Kaliningrad', 'Europe/Samara',
-      'Asia/Yekaterinburg', 'Asia/Omsk', 'Asia/Krasnoyarsk',
-      'Asia/Irkutsk', 'Asia/Yakutsk', 'Asia/Vladivostok',
-      'Asia/Magadan', 'Asia/Kamchatka', 'Asia/Sakhalin', 'Asia/Anadyr'
-    ];
+    const getCountry = (): Promise<string | null> =>
+      tryFetch('https://get.geojs.io/v1/ip/country.json').then(d => d.country)
+        .catch(() => tryFetch('https://ipwho.is/').then(d => d.country_code))
+        .catch(() => tryFetch('https://ipapi.co/json/').then(d => d.country_code))
+        .catch(() => null);
 
-    const isRuLang = langs.some(l => l.toLowerCase().startsWith('ru')) || lang.toLowerCase().startsWith('ru');
-    const isRuTz = ruTimezones.includes(tz);
-
-    setBlocked(isRuLang && isRuTz);
+    getCountry().then(country => {
+      if (country === null) { setBlocked(true); return; }
+      setBlocked(country === 'RU');
+    }).catch(() => setBlocked(true));
   }, []);
 
   if (blocked === null) return null;
