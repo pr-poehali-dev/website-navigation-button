@@ -12,19 +12,18 @@ const queryClient = new QueryClient();
 
 const BlockedPage = () => (
   <div style={{
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100vh',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    padding: '8px 16px',
     background: '#f5f5f5',
-    fontFamily: 'sans-serif'
+    fontFamily: 'sans-serif',
+    fontSize: 12,
+    color: '#aaa',
+    textAlign: 'right'
   }}>
-    <div style={{ textAlign: 'center', maxWidth: 400, padding: 32 }}>
-      <div style={{ fontSize: 48, marginBottom: 16 }}>🚫</div>
-      <h1 style={{ fontSize: 22, marginBottom: 12, color: '#333' }}>Доступ обмежено</h1>
-      <p style={{ color: '#666', lineHeight: 1.6 }}>Цей ресурс недоступний у вашому регіоні.</p>
-      <p style={{ color: '#aaa', fontSize: 13, marginTop: 16 }}>Код помилки: 451</p>
-    </div>
+    451
   </div>
 );
 
