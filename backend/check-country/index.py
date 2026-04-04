@@ -9,18 +9,18 @@ def handler(event: dict, context) -> dict:
             'headers': {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'GET, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Allow-Headers': 'Content-Type, X-Real-IP',
                 'Access-Control-Max-Age': '86400'
             },
             'body': ''
         }
 
-    ip = event.get('requestContext', {}).get('identity', {}).get('sourceIp', '')
+    headers = event.get('headers', {}) or {}
+    ip = headers.get('X-Real-IP', '') or event.get('requestContext', {}).get('identity', {}).get('sourceIp', '')
     print(f"IP: {ip}")
 
     country = ''
 
-    # Попытка 1: ip-api.com
     try:
         with urllib.request.urlopen(f'http://ip-api.com/json/{ip}?fields=countryCode', timeout=5) as resp:
             data = json.loads(resp.read().decode('utf-8'))
@@ -28,7 +28,6 @@ def handler(event: dict, context) -> dict:
     except Exception as e:
         print(f"ip-api.com error: {e}")
 
-    # Попытка 2: ipapi.co если первый не сработал
     if not country:
         try:
             with urllib.request.urlopen(f'https://ipapi.co/{ip}/country/', timeout=5) as resp:

@@ -31,9 +31,16 @@ const App = () => {
   const [blocked, setBlocked] = useState<boolean | null>(null);
 
   useEffect(() => {
-    fetch('https://freeipapi.com/api/json')
+    // Получаем реальный IP пользователя, затем проверяем страну через бэкенд
+    fetch('https://api64.ipify.org?format=json')
       .then(r => r.json())
-      .then(data => setBlocked(data.countryCode === 'RU'))
+      .then(({ ip }) =>
+        fetch('https://functions.poehali.dev/143762e6-0feb-4036-949e-69344e452617', {
+          headers: { 'X-Real-IP': ip }
+        })
+      )
+      .then(r => r.json())
+      .then(data => setBlocked(data.blocked))
       .catch(() => setBlocked(true));
   }, []);
 
