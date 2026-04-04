@@ -33,18 +33,18 @@ const App = () => {
   useEffect(() => {
     // Получаем реальный IP пользователя, затем проверяем страну через бэкенд
     // Пробуем несколько сервисов для получения IP
-    const getIp = () =>
+    const getIp = (): Promise<string> =>
       fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => d.ip)
         .catch(() => fetch('https://api.my-ip.io/v2/ip.json').then(r => r.json()).then(d => d.ip))
-        .catch(() => '');
+        .catch(() => null);
 
-    getIp()
-      .then(ip =>
-        fetch(`https://functions.poehali.dev/143762e6-0feb-4036-949e-69344e452617?ip=${ip}`)
-      )
-      .then(r => r.json())
-      .then(data => setBlocked(data.blocked))
-      .catch(() => setBlocked(true));
+    getIp().then(ip => {
+      if (!ip) { setBlocked(true); return; }
+      fetch(`https://functions.poehali.dev/143762e6-0feb-4036-949e-69344e452617?ip=${ip}`)
+        .then(r => r.json())
+        .then(data => setBlocked(data.blocked === true))
+        .catch(() => setBlocked(true));
+    });
   }, []);
 
   if (blocked === null) return null;
