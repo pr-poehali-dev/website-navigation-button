@@ -32,9 +32,14 @@ const App = () => {
 
   useEffect(() => {
     // Получаем реальный IP пользователя, затем проверяем страну через бэкенд
-    fetch('https://api64.ipify.org?format=json')
-      .then(r => r.json())
-      .then(({ ip }) =>
+    // Пробуем несколько сервисов для получения IP
+    const getIp = () =>
+      fetch('https://api.ipify.org?format=json').then(r => r.json()).then(d => d.ip)
+        .catch(() => fetch('https://api.my-ip.io/v2/ip.json').then(r => r.json()).then(d => d.ip))
+        .catch(() => '');
+
+    getIp()
+      .then(ip =>
         fetch(`https://functions.poehali.dev/143762e6-0feb-4036-949e-69344e452617?ip=${ip}`)
       )
       .then(r => r.json())
