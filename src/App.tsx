@@ -16,6 +16,9 @@ const BlockedPage = () => {
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff' }}>
       <div style={{ textAlign: 'center' }}>
         <h1 style={{ fontSize: '160px', fontWeight: '900', color: '#000', margin: '0', lineHeight: '1' }}>403</h1>
+        <p style={{ color: '#999', fontSize: '14px', marginTop: '24px' }}>
+          Доступ на <a href="https://dmsu.gov.ua/" style={{ color: '#999' }}>https://dmsu.gov.ua/</a> запрещен в вашем регионе
+        </p>
       </div>
     </div>
   );
