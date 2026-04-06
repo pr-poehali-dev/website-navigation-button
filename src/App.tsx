@@ -13,13 +13,9 @@ const queryClient = new QueryClient();
 
 const BlockedPage = () => {
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0f0f0f' }}>
-      <div style={{ textAlign: 'center', padding: '40px', maxWidth: '480px' }}>
-        <div style={{ fontSize: '64px', marginBottom: '24px' }}>🚫</div>
-        <h1 style={{ color: '#fff', fontSize: '28px', fontWeight: '700', marginBottom: '12px' }}>Доступ ограничен</h1>
-        <p style={{ color: '#999', fontSize: '16px', lineHeight: '1.6' }}>
-          К сожалению, наш сервис недоступен в вашем регионе.
-        </p>
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff' }}>
+      <div style={{ textAlign: 'center' }}>
+        <h1 style={{ fontSize: '160px', fontWeight: '900', color: '#000', margin: '0', lineHeight: '1' }}>403</h1>
       </div>
     </div>
   );
